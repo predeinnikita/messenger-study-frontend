@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { STATUS_CODES } from 'http';
+import React, { Component, Dispatch, SetStateAction, useState } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+let name = '';
+
+const login = (func: Dispatch<SetStateAction<string>>) => function () {
+  console.log({
+    type: 'LOGIN_REQUEST',
+  });
+
+  //eslint-disable-next-line no-undef
+  VK.Auth.login((r) => {
+    if (r.session) {
+      let username = r.session.user.first_name;
+      func(username);
+      console.log({
+        type: 'LOGIN_SUCCESS',
+        payload: username,
+      });
+    } else {
+      console.log({
+        type: 'LOGIN_FAIL',
+        error: true,
+        payload: new Error('Ошибка авторизации'),
+      });
+    }
+  }, 4); // запрос прав на доступ к photo
+};
+
+const logout = (func: Dispatch<SetStateAction<string>>) => function(){
+  VK.Auth.logout((r) => {
+    console.log(r);
+    func('');
+  });
 }
 
-export default App;
+
+
+export const App = () => {
+    const [name, setName] = useState('');
+    return (
+      <div className="app">
+        <div id='vk'>{name}</div>
+        <button onClick={login(setName)}>Войти</button>
+        <button onClick={logout(setName)}>Выйти</button>
+      </div>
+    )
+}
+
