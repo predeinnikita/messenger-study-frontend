@@ -1,49 +1,45 @@
-import { STATUS_CODES } from 'http';
-import React, { Component, Dispatch, SetStateAction, useState } from 'react';
-
-let name = '';
-
-const login = (func: Dispatch<SetStateAction<string>>) => function () {
-  console.log({
-    type: 'LOGIN_REQUEST',
-  });
-
-  //eslint-disable-next-line no-undef
-  VK.Auth.login((r) => {
-    if (r.session) {
-      let username = r.session.user.first_name;
-      func(username);
-      console.log({
-        type: 'LOGIN_SUCCESS',
-        payload: username,
-      });
-    } else {
-      console.log({
-        type: 'LOGIN_FAIL',
-        error: true,
-        payload: new Error('Ошибка авторизации'),
-      });
-    }
-  }, 4); // запрос прав на доступ к photo
-};
-
-const logout = (func: Dispatch<SetStateAction<string>>) => function(){
-  VK.Auth.logout((r) => {
-    console.log(r);
-    func('');
-  });
-}
-
-
+import { useState } from 'react';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { LoginForm } from './modules/login/login.component';
+import { Main } from './modules/main/main.component';
+import { Footer } from './shared/components/footer.component';
+import { Header } from './shared/components/header.component';
+import { VkAuth } from './shared/utils/vk.auth';
 
 export const App = () => {
-    const [name, setName] = useState('');
-    return (
-      <div className="app">
-        <div id='vk'>{name}</div>
-        <button onClick={login(setName)}>Войти</button>
-        <button onClick={logout(setName)}>Выйти</button>
-      </div>
-    )
+  let navigate = useNavigate();
+
+  VkAuth.unsubscribe();
+  const [name, setName] = useState('');
+
+  VkAuth.addSubscription(
+    VkAuth.loginChange$.subscribe((name) => {
+      setName(name);
+    })
+  );
+
+  const login = () => {
+    navigate('/login');
+    VkAuth.login();
+  };
+
+  const logout = () => {
+    navigate('/main');
+    VkAuth.logout();
+  }
+
+  return (
+    <div className="app">
+      <Header/>
+      <div id='vk'>{name}</div>
+      <button onClick={login}>Войти</button>
+      <button onClick={logout}>Выйти</button>
+        <Routes>
+          <Route path="login" element={<LoginForm />}/>
+          <Route path="main" element={<Main />}/>
+        </Routes>
+      <Footer />
+    </div>
+  )
 }
 
