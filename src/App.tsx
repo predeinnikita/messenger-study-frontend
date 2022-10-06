@@ -1,45 +1,41 @@
-import { useState } from 'react';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
-import { LoginForm } from './modules/login/login.component';
-import { Main } from './modules/main/main.component';
-import { Footer } from './shared/components/footer.component';
-import { Header } from './shared/components/header.component';
-import { VkAuth } from './shared/utils/vk.auth';
+import { useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { LoginForm } from './shared/components/login/login.component';
+import { Main } from './shared/components/main/main.component';
+import { Footer } from './shared/components/footer/footer.component';
+import { Header } from './shared/components/header/header.component';
+import { observer } from 'mobx-react';
+import loaderStore from './shared/stores/loader.store';
+import { Loader } from './shared/components/loader/loader.component';
 
-export const App = () => {
-  let navigate = useNavigate();
+export const App = observer(() => {
+  const navigate = useNavigate();
 
-  VkAuth.unsubscribe();
-  const [name, setName] = useState('');
+  useEffect(() => {
+    setTimeout(() => {
+      loaderStore.setState(false);
+    }, 2000);
 
-  VkAuth.addSubscription(
-    VkAuth.loginChange$.subscribe((name) => {
-      setName(name);
-    })
-  );
-
-  const login = () => {
-    navigate('/login');
-    VkAuth.login();
-  };
-
-  const logout = () => {
-    navigate('/main');
-    VkAuth.logout();
-  }
+    VK.Auth.getLoginStatus((response) => {
+      if (response.status === 'not_authorized' || response.status === 'unknown') {
+        navigate('/login');
+      } else {
+        console.log(response);
+        navigate('/main');
+      }
+    });
+  }, []);
 
   return (
     <div className="app">
       <Header/>
-      <div id='vk'>{name}</div>
-      <button onClick={login}>Войти</button>
-      <button onClick={logout}>Выйти</button>
         <Routes>
           <Route path="login" element={<LoginForm />}/>
           <Route path="main" element={<Main />}/>
         </Routes>
       <Footer />
+      { loaderStore.loading? <Loader />: '' }
     </div>
   )
-}
+})
 

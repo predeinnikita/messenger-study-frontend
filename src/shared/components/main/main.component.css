@@ -1,0 +1,19 @@
+.main {
+    padding: 50px 193px;
+    gap: 20px;
+    height: 770px;
+    background-color: var(--bg-color);
+    display: flex;
+}
+
+.main__chat-list {
+    background-color: #fff;
+    border-radius: var(--card-radius);
+    width: 303px;
+}
+
+.main__chat {
+    background-color: #fff;
+    border-radius: var(--card-radius);
+    width: 100%;
+}

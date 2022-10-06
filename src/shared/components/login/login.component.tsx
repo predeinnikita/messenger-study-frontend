@@ -1,6 +1,9 @@
+import './login.component.css'
+
 export const LoginForm = () => {
+    
     return (
-      <div className="login-form">
+      <div className="login">
         login
       </div>
     )
