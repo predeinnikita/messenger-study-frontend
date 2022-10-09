@@ -1,7 +1,7 @@
 .main {
     padding: 50px 193px;
     gap: 20px;
-    height: 770px;
+    height: 527px;
     background-color: var(--bg-color);
     display: flex;
 }
@@ -10,10 +10,34 @@
     background-color: #fff;
     border-radius: var(--card-radius);
     width: 303px;
+
+    overflow: auto;
+}
+
+.main__chat-list::-webkit-scrollbar {
+  display: none;
+}
+ 
+/* Скрываем scrollbar для IE, Edge и Firefox */
+.main__chat-list {
+  -ms-overflow-style: none;  /* IE и Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .main__chat {
     background-color: #fff;
     border-radius: var(--card-radius);
     width: 100%;
+
+    display: flex;
+    justify-content: end;
+    flex-direction: column;
+}
+
+.main__chat_send {
+    display: flex;
+    padding: 10px 10px;
+    background-color: #e3e4e5;
+    border: 1px solid #cbcbcc;
+    border-radius: 0 0 var(--card-radius) var(--card-radius);
 }

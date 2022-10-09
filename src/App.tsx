@@ -7,25 +7,10 @@ import { Header } from './shared/components/header/header.component';
 import { observer } from 'mobx-react';
 import loaderStore from './shared/stores/loader.store';
 import { Loader } from './shared/components/loader/loader.component';
+import { ajax } from 'rxjs/ajax'
+import authStore from './shared/stores/auth.store';
 
 export const App = observer(() => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    setTimeout(() => {
-      loaderStore.setState(false);
-    }, 2000);
-
-    VK.Auth.getLoginStatus((response) => {
-      if (response.status === 'not_authorized' || response.status === 'unknown') {
-        navigate('/login');
-      } else {
-        console.log(response);
-        navigate('/main');
-      }
-    });
-  }, []);
-
   return (
     <div className="app">
       <Header/>

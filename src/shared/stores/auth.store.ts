@@ -9,6 +9,10 @@ const authStore = observable({
     changeName(name: string) {
         this.name = name;
     },
+    access_token: '',
+    updateAccessToken(token: string) {
+        this.access_token = token;
+    }
 });
 
 export default authStore;

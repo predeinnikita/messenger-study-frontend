@@ -1,0 +1,19 @@
+.chat-item {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #898c9142;  
+    padding: 10px;    
+}
+
+.chat-item:hover {
+    background: #edeef0;
+}
+
+.chat-item__name {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.chat-item__message {
+    font-size: 13px;
+}
+
