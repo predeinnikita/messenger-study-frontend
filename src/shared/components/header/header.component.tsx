@@ -6,6 +6,7 @@ import loaderStore from '../../stores/loader.store';
 import { ajax } from 'rxjs/ajax'
 
 import './header.component.css';
+import { Button } from '../button/button.component';
 
 export const Header = observer(() => {
   let navigate = useNavigate();
@@ -18,10 +19,10 @@ export const Header = observer(() => {
   
   return (
     <header className='header'>
-      {!authStore.name? 'Необходимо войти': authStore.name}
+      messenger-study-frontend
       {!authStore.auth 
-        ? <button className='header__button' onClick={login}>Войти</button>
-        : <button className='header__button' onClick={logout}>Выйти</button>
+        ? <Button className='header__button' onClick={login} placeholder='Войти' />
+        : <Button className='header__button' onClick={logout} placeholder='Выйти' />
       }
     </header>
   )

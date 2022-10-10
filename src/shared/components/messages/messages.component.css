@@ -1,0 +1,45 @@
+.messages {
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 16px;
+    gap: 8px;
+    height: 100%;
+    overflow: auto;
+}
+
+
+.messages::-webkit-scrollbar {
+    display: none;
+}
+
+/* Скрываем scrollbar для IE, Edge и Firefox */
+.messages {
+    -ms-overflow-style: none;
+    /* IE и Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.message {
+    font-size: 13px;
+}
+
+.message__text {
+    display: inline-block;
+    background-color: #e3e4e5;
+    border: 1px solid #cbcbcc;
+    padding: 4px;
+    border-radius: 7px;
+}
+
+.message__time {
+    font-size: 10px;
+}
+
+.my {
+    text-align: end;
+}
+
+.my>.message__text {
+    background-color: #f0f8ff;
+}

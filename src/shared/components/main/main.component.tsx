@@ -25,8 +25,8 @@ export const Main = () => {
       <div className='main__chat'>
         <Messages />
         <div className='main__chat_send'>
-          <Input />
-          <Button />
+          <Input type='text' placeholder='Напишите сообщение' />
+          <Button placeholder='Отправить' />
         </div>
       </div>
     </div>

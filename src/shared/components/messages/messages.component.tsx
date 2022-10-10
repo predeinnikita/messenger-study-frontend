@@ -1,11 +1,98 @@
-// import './messages.component.css'
+import './messages.component.css'
 
 export const Messages = (props: any) => {
-  // console.log(props.index);
+
   
     return (
       <div className="messages">
-        ьуыыфп
+        <div className="message my">
+        <div className='message__text'>
+          Мое сообщение
+          <div className='message__time'>12:00</div>
+          </div>
+        </div>
+
+        <div className="message">
+        <div className='message__text'>
+          Сообщение собеседника
+          <div className='message__time'>12:00</div>
+          </div>
+        </div>
+        <div className="message">
+        <div className='message__text'>
+          Сообщение собеседника
+          <div className='message__time'>12:00</div>
+          </div>
+        </div>
+        <div className="message my">
+          <div className='message__text'>
+          Мое сообщение
+          <div className='message__time'>12:00</div>
+          </div>
+        </div>
+        <div className="message my">
+          <div className='message__text'>
+          Мое сообщение
+          <div className='message__time'>12:00</div>
+          </div>
+        </div>
+        <div className="message">
+        <div className='message__text'>
+          Сообщение собеседника
+          <div className='message__time'>12:00</div>
+          </div>
+        </div>
+        <div className="message my">
+          <div className='message__text'>
+          Мое сообщение
+          <div className='message__time'>12:00</div>
+          </div>
+        </div>
+        <div className="message">
+        <div className='message__text'>
+          Сообщение собеседника
+          <div className='message__time'>12:00</div>
+          </div>
+        </div>
+        <div className="message">
+        <div className='message__text'>
+          Сообщение собеседника
+          <div className='message__time'>12:00</div>
+          </div>
+        </div>
+        <div className="message my">
+          <div className='message__text'>
+          Мое сообщение
+          <div className='message__time'>12:00</div>
+          </div>
+        </div>
+        <div className="message">
+        <div className='message__text'>
+          Сообщение собеседника
+          <div className='message__time'>12:00</div>
+          </div>
+        </div>
+
+
+        <div className="message">
+        <div className='message__text'>
+          Сообщение собеседника
+          <div className='message__time'>12:00</div>
+          </div>
+        </div>
+        <div className="message my">
+          <div className='message__text'>
+          Мое сообщение
+          <div className='message__time'>12:00</div>
+          </div>
+        </div>
+        <div className="message">
+        <div className='message__text'>
+          Сообщение собеседника
+          <div className='message__time'>12:00</div>
+          </div>
+          </div>
+
       </div>
     )
   }

@@ -1,7 +1,12 @@
-.input-message {
+.input {
+    box-sizing: border-box;
     width: 100%;
-    height: 20px;
+    height: 29px;
     border: 1px solid #bcbcbc;
+    padding: 2px 12px;
     border-radius: 4px;
     font-family: 'Montserrat';
+}
+
+.input:focus {
 }

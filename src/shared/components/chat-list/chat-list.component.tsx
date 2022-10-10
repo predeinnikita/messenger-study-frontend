@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { ChatItem } from '../chat-item/chat-item.componen';
+import { Input } from '../input/input.component';
 import './chat-list.component.css'
 
 export const ChatList = () => {
@@ -10,8 +11,13 @@ export const ChatList = () => {
   });
   
   return (
-      <ul className="chat-list">
-          {chats}
-      </ul>
+      <div>
+        <div className='search-block'>
+          <Input type='text' placeholder='Поиск' />
+        </div>
+        <ul className="chat-list">
+            {chats}
+        </ul>
+      </div>
   )
 }
