@@ -9,10 +9,11 @@ import loaderStore from './shared/stores/loader.store';
 import { Loader } from './shared/components/loader/loader.component';
 import { ajax } from 'rxjs/ajax'
 import authStore from './shared/stores/auth.store';
+import './App.css';
 
 export const App = observer(() => {
   return (
-    <div className="app">
+    <div className="app s">
       <Header/>
         <Routes>
           <Route path="login" element={<LoginForm />}/>

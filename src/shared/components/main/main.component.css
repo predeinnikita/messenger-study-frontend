@@ -4,6 +4,7 @@
     height: 527px;
     background-color: var(--bg-color);
     display: flex;
+    flex: 1 0 auto;
 }
 
 .main__chat-list {
