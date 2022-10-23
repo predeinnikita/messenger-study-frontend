@@ -10,6 +10,7 @@ import { Loader } from './shared/components/loader/loader.component';
 import { ajax } from 'rxjs/ajax'
 import authStore from './shared/stores/auth.store';
 import './App.css';
+import { RegistrationForm } from './pages/registration/registration.component';
 
 export const App = observer(() => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ export const App = observer(() => {
         <Routes>
           <Route path="login" element={<LoginForm />}/>
           <Route path="main" element={<Main />}/>
+          <Route path="registration" element={<RegistrationForm />}/>
         </Routes>
       <Footer />
       { loaderStore.loading? <Loader />: '' }

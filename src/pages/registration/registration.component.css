@@ -1,22 +1,25 @@
-.login {
+.registration {
+    /* padding: 50px 193px;
+    gap: 20px;
+    height: 527px; */
+    background-color: var(--bg-color);
     display: flex;
+    flex: 1 0 auto;
     justify-content: center;
     align-items: center;
-    background-color: var(--bg-color);
-    height: 100%;
 }
 
-.login__form {
+.registration__form {
     width: 318px;
-    height: 161px;
+    height: 308px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     padding: 91px;
     background-color: #ffffff;
     border: 1px solid #bcbcbc;
 }
 
-.to-registration {
+.to-login {
     font-size: smaller;
 }

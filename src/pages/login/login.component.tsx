@@ -48,6 +48,7 @@ export const LoginForm = () => {
         <Button placeholder='Войти' 
                 onClick={login} 
         />
+        <span className='to-registration'>Нет аккаунта? <a href='/registration'>Зарегистрируйтесь!</a></span>
       </form>
     </div>
   )
