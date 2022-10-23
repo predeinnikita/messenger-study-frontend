@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { ChatItem } from '../chat-item/chat-item.componen';
-import { Input } from '../input/input.component';
+import { Input } from '../../../../shared/components/input/input.component';
 import './chat-list.component.css'
 
 export const ChatList = () => {

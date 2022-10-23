@@ -20,7 +20,7 @@ export const Header = observer(() => {
   return (
     <header className='header'>
       messenger-study-frontend
-      {!authStore.auth 
+      {!false 
         ? <Button className='header__button' onClick={login} placeholder='Войти' />
         : <Button className='header__button' onClick={logout} placeholder='Выйти' />
       }

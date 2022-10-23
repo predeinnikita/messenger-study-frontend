@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { LoginForm } from './shared/components/login/login.component';
-import { Main } from './shared/components/main/main.component';
+import { LoginForm } from './pages/login/login.component';
+import { Main } from './pages/main/main.component';
 import { Footer } from './shared/components/footer/footer.component';
 import { Header } from './shared/components/header/header.component';
 import { observer } from 'mobx-react';
@@ -12,6 +12,15 @@ import authStore from './shared/stores/auth.store';
 import './App.css';
 
 export const App = observer(() => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    authStore.checkToken().subscribe(result => {
+      if (!result) {
+        authStore.refreshToken().subscribe();
+      }
+    })
+  }, []);
+
   return (
     <div className="app s">
       <Header/>

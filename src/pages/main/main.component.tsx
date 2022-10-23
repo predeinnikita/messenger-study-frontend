@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
-import authStore from '../../stores/auth.store';
-import { ChatList } from '../chat-list/chat-list.component';
+import authStore from '../../shared/stores/loader.store';
+import { ChatList } from './components/chat-list/chat-list.component';
 import { ajax } from 'rxjs/ajax'
 
 import './main.component.css'
-import loaderStore from '../../stores/loader.store';
-import { Messages } from '../messages/messages.component';
-import { Input } from '../input/input.component';
-import { Button } from '../button/button.component';
+import loaderStore from '../../shared/stores/loader.store';
+import { Messages } from './components/messages/messages.component';
+import { Input } from '../../shared/components/input/input.component';
+import { Button } from '../../shared/components/button/button.component';
 
 
 export const Main = () => {
