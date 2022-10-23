@@ -6,6 +6,7 @@ import { Input } from '../../shared/components/input/input.component';
 import './login.component.css'
 import authStore from '../../shared/stores/auth.store';
 import { catchError, of, pipe } from 'rxjs';
+import md5 from 'md5'
 
 export const LoginForm = () => {
   useEffect(() => {
@@ -21,7 +22,9 @@ export const LoginForm = () => {
   const login = (e: Event) => {
     e.preventDefault();
     loaderStore.setState(true);
-    authStore.login({ username, password }).pipe(
+    const passwordHash = md5(password);
+    
+    authStore.login({ username, password: passwordHash }).pipe(
       catchError(() => of(false))
     ).subscribe(res => {
       if (res) {
