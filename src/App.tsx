@@ -7,7 +7,6 @@ import { Header } from './shared/components/header/header.component';
 import { observer } from 'mobx-react';
 import loaderStore from './shared/stores/loader.store';
 import { Loader } from './shared/components/loader/loader.component';
-import { ajax } from 'rxjs/ajax'
 import authStore from './shared/stores/auth.store';
 import './App.css';
 import { RegistrationForm } from './pages/registration/registration.component';

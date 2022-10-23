@@ -7,22 +7,22 @@ import { ajax } from 'rxjs/ajax'
 
 import './header.component.css';
 import { Button } from '../button/button.component';
+import { getPath } from '../../utils/get-path';
 
 export const Header = observer(() => {
   let navigate = useNavigate();
-  
-  const login = () => {
-  };
 
   const logout = () => {
+    navigate('/login')
   }
   
   return (
     <header className='header'>
       messenger-study-frontend
-      {!false 
-        ? <Button className='header__button' onClick={login} placeholder='Войти' />
-        : <Button className='header__button' onClick={logout} placeholder='Выйти' />
+      { 
+        getPath().includes('main')
+        ? <Button className='header__button' onClick={logout} placeholder='Выйти' />
+        : ''
       }
     </header>
   )
