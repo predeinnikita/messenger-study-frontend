@@ -3,6 +3,7 @@ import { catchError, map, Observable, of, tap } from "rxjs";
 import { ajax } from 'rxjs/ajax'
 import { apiHost } from "../../constants";
 import { ILoginResponse, ILoginRequest } from "../interfaces/login.interfaces";
+import { IRegistrationRequest } from "../interfaces/registration.interfaces";
 
 const authStore = observable({
     headers: () => ({
@@ -20,6 +21,10 @@ const authStore = observable({
                 return access_token;
             })
         )
+    },
+    registration(data: IRegistrationRequest) {
+        return ajax.post(`${apiHost}/auth/registration`, data, this.headers())
+
     },
     checkToken(): Observable<boolean> {
         return ajax.get(`${apiHost}/auth/check-token`, this.headers()).pipe(

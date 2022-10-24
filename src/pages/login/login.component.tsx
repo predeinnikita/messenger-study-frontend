@@ -36,6 +36,8 @@ export const LoginForm = () => {
     });
   }
 
+  const formValid = password && password.length > 7 && username;
+
   return (
     <div className="login">
       <form className='login__form'>
@@ -49,7 +51,8 @@ export const LoginForm = () => {
                value={password} 
                onChangeHandler={(event: any) => setPassword(event.target.value)} />
         <Button placeholder='Войти' 
-                onClick={login} 
+                onClick={login}
+                disabled={!formValid} 
         />
         <span className='to-registration'>Нет аккаунта? <a href='/registration'>Зарегистрируйтесь!</a></span>
       </form>

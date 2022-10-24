@@ -5,6 +5,7 @@ export const Button = (props: any) => {
         <button 
             className={"custom-button " + props.className}
             onClick={props.onClick}
+            disabled={props.disabled}
         >{props.placeholder}</button>
     )
 }

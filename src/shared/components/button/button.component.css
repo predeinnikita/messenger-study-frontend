@@ -10,3 +10,8 @@
     cursor: pointer;
     background-color: #3e3e3e;
 }
+
+.custom-button:disabled {
+    cursor: default;
+    background-color: #5c5c5c;
+}
