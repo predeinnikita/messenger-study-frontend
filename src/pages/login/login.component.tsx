@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import loaderStore from '../../shared/stores/loader.store';
-import { Button } from '../../shared/components/button/button.component';
+import { Button, ButtonEvent } from '../../shared/components/button/button.component';
 import { Input } from '../../shared/components/input/input.component';
 import './login.component.css'
 import authStore from '../../shared/stores/auth.store';
@@ -19,7 +19,7 @@ export const LoginForm = () => {
   const [password, setPassword] = useState<string>('');
   const navigate = useNavigate();
 
-  const login = (e: Event) => {
+  const login = (e: ButtonEvent) => {
     e.preventDefault();
     loaderStore.setState(true);
     const passwordHash = md5(password);
@@ -51,7 +51,7 @@ export const LoginForm = () => {
                value={password} 
                onChangeHandler={(event: any) => setPassword(event.target.value)} />
         <Button placeholder='Войти' 
-                onClick={login}
+                onClickHandler={login}
                 disabled={!formValid} 
         />
         <span className='to-registration'>Нет аккаунта? <a href='/registration'>Зарегистрируйтесь!</a></span>

@@ -1,3 +1,4 @@
+import { Http2ServerRequest } from "http2";
 import { observable } from "mobx";
 import { catchError, map, Observable, of, tap } from "rxjs";
 import { ajax } from 'rxjs/ajax'
@@ -18,7 +19,17 @@ const authStore = observable({
             map(res => {
                 const access_token = res.response.access_token;
                 this.updateAccessToken(access_token);
+
                 return access_token;
+            })
+        )
+    },
+    logout(): Observable<number> {
+        return ajax.post(`${apiHost}/auth/logout`, {}, this.headers()).pipe(
+            map((res) => {
+                this.updateAccessToken('');
+
+                return res.status;
             })
         )
     },
@@ -43,6 +54,7 @@ const authStore = observable({
             map(res => {
                 const access_token = res.response.access_token;
                 this.updateAccessToken(access_token);
+
                 return access_token;
             })
         );
