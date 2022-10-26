@@ -15,7 +15,13 @@ const authStore = observable({
         localStorage.setItem('access_token', 'Bearer ' + token)
     },
     login(data: ILoginRequest): Observable<string> {
-        return ajax.post<ILoginResponse>(`${apiHost}/auth/login`, data, this.headers()).pipe(
+        return ajax<ILoginResponse>({
+            method: 'POST',
+            url: `${apiHost}/auth/login`,
+            withCredentials: true,
+            headers: this.headers(),
+            body: data
+        }).pipe(
             map(res => {
                 const access_token = res.response.access_token;
                 this.updateAccessToken(access_token);
@@ -25,7 +31,12 @@ const authStore = observable({
         )
     },
     logout(): Observable<number> {
-        return ajax.post(`${apiHost}/auth/logout`, {}, this.headers()).pipe(
+        return ajax<ILoginResponse>({
+            method: 'POST',
+            url: `${apiHost}/auth/logout`,
+            withCredentials: true,
+            headers: this.headers(),
+        }).pipe(
             map((res) => {
                 this.updateAccessToken('');
 
@@ -55,13 +66,6 @@ const authStore = observable({
                 const access_token = res.response.access_token;
                 this.updateAccessToken(access_token);
 
-                return access_token;
-            })
-        );
-        return ajax.get<ILoginResponse>(`${apiHost}/auth/refresh`, {'withCredentials': "true"}).pipe(
-            map(res => {
-                const access_token = res.response.access_token;
-                this.updateAccessToken(access_token);
                 return access_token;
             })
         );
