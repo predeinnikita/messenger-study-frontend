@@ -1,0 +1,12 @@
+.search-friend {
+    display: flex;
+}
+
+.search-friend__search {
+    display: flex;
+    width: 100%;
+}
+
+.search-friend__result {
+    margin: 15px;
+}
