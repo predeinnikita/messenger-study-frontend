@@ -5,6 +5,6 @@ export enum ModalResult {
 }
 
 export enum ModalEventType {
-    Open, 
-    Close
+    Open = 'Open', 
+    Close = 'Close',
 }

@@ -40,7 +40,7 @@ export class ModalViewModel {
         if (modal) {
             window.addEventListener('click', (event) => {
                 if (event.target === modal) {
-                    modal.style.display = "none";
+                    this.close();
                 }
             })
         }
