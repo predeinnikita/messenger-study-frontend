@@ -1,98 +1,33 @@
 import './messages.component.css'
 
-export const Messages = (props: any) => {
+export const Messages = (props: IMessagesProps) => {
 
-  
-    return (
-      <div className="messages">
-        <div className="message my">
-        <div className='message__text'>
-          Мое сообщение
-          <div className='message__time'>12:00</div>
-          </div>
-        </div>
+  const { messages } = props;
 
-        <div className="message">
-        <div className='message__text'>
-          Сообщение собеседника
-          <div className='message__time'>12:00</div>
-          </div>
-        </div>
-        <div className="message">
-        <div className='message__text'>
-          Сообщение собеседника
-          <div className='message__time'>12:00</div>
-          </div>
-        </div>
-        <div className="message my">
+  return (
+    <div className="messages">
+      {
+        messages.map((message, index) => {
+          return <div className={`message ${message.my? 'my': ''}`} key={index}>
           <div className='message__text'>
-          Мое сообщение
-          <div className='message__time'>12:00</div>
+            {message.text}
+            <div className='message__time'>{message.date.split('T')[0]}</div>
           </div>
         </div>
-        <div className="message my">
-          <div className='message__text'>
-          Мое сообщение
-          <div className='message__time'>12:00</div>
-          </div>
-        </div>
-        <div className="message">
-        <div className='message__text'>
-          Сообщение собеседника
-          <div className='message__time'>12:00</div>
-          </div>
-        </div>
-        <div className="message my">
-          <div className='message__text'>
-          Мое сообщение
-          <div className='message__time'>12:00</div>
-          </div>
-        </div>
-        <div className="message">
-        <div className='message__text'>
-          Сообщение собеседника
-          <div className='message__time'>12:00</div>
-          </div>
-        </div>
-        <div className="message">
-        <div className='message__text'>
-          Сообщение собеседника
-          <div className='message__time'>12:00</div>
-          </div>
-        </div>
-        <div className="message my">
-          <div className='message__text'>
-          Мое сообщение
-          <div className='message__time'>12:00</div>
-          </div>
-        </div>
-        <div className="message">
-        <div className='message__text'>
-          Сообщение собеседника
-          <div className='message__time'>12:00</div>
-          </div>
-        </div>
+        })
+      }
+      
+    </div>
+  )
+}
 
+export interface IMessagesProps {
+  messages: IMessage[]
+}
 
-        <div className="message">
-        <div className='message__text'>
-          Сообщение собеседника
-          <div className='message__time'>12:00</div>
-          </div>
-        </div>
-        <div className="message my">
-          <div className='message__text'>
-          Мое сообщение
-          <div className='message__time'>12:00</div>
-          </div>
-        </div>
-        <div className="message">
-        <div className='message__text'>
-          Сообщение собеседника
-          <div className='message__time'>12:00</div>
-          </div>
-          </div>
-
-      </div>
-    )
-  }
+export interface IMessage {
+  id: number;
+  text: string;
+  date: string;
+  my: boolean;
+}

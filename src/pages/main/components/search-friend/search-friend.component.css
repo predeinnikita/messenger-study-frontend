@@ -10,3 +10,20 @@
 .search-friend__result {
     margin: 15px;
 }
+
+.user{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #898c9142;  
+    padding: 10px;    
+}
+
+.user:hover {
+    background: #edeef0;
+}
+
+.user__name {
+    font-weight: 500;
+    font-size: 14px;
+}

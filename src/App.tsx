@@ -10,17 +10,11 @@ import { Loader } from './shared/components/loader/loader.component';
 import authStore from './shared/stores/auth.store';
 import './App.css';
 import { RegistrationForm } from './pages/registration/registration.component';
+import { io } from 'socket.io-client';
 
 export const App = observer(() => {
   const navigate = useNavigate();
-  useEffect(() => {
-    authStore.checkToken().subscribe(result => {
-      if (!result) {
-        authStore.refreshToken().subscribe();
-      }
-    })
-  }, []);
-
+  
   return (
     <div className="app s">
       <Header/>

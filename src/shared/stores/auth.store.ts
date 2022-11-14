@@ -7,6 +7,9 @@ import { ILoginResponse, ILoginRequest } from "../interfaces/login.interfaces";
 import { IRegistrationRequest } from "../interfaces/registration.interfaces";
 
 const authStore = observable({
+    get userId(): number {
+        return Number(localStorage.getItem('userId'));
+    },
     headers: () => ({
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('access_token') || '',
@@ -23,6 +26,7 @@ const authStore = observable({
             body: data
         }).pipe(
             map(res => {
+                localStorage.setItem('userId', res.response.userId.toString())
                 const access_token = res.response.access_token;
                 this.updateAccessToken(access_token);
 
@@ -48,10 +52,10 @@ const authStore = observable({
         return ajax.post(`${apiHost}/auth/registration`, data, this.headers())
 
     },
-    checkToken(): Observable<boolean> {
-        return ajax.get(`${apiHost}/auth/check-token`, this.headers()).pipe(
-            catchError((response) => of(response)),
-            map(response => response.status === 200),
+    checkToken(): Observable<any> {
+        return ajax.get<any>(`${apiHost}/auth/check-token`, this.headers()).pipe(
+                map(result => localStorage.setItem('userId', result.response.userId)
+            )
         );
     },
     refreshToken() {
@@ -59,8 +63,6 @@ const authStore = observable({
             method: 'GET',
             url: `${apiHost}/auth/refresh`,
             withCredentials: true,
-            headers: {
-            }
         }).pipe(
             map(res => {
                 const access_token = res.response.access_token;
