@@ -28,7 +28,7 @@
     display: inline-block;
     background-color: #e3e4e5;
     border: 1px solid #cbcbcc;
-    padding: 4px;
+    padding: 9px;
     border-radius: 7px;
 }
 
@@ -42,4 +42,8 @@
 
 .my>.message__text {
     background-color: #f0f8ff;
+}
+
+.without-chat-message {
+
 }

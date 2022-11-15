@@ -18,26 +18,34 @@ import messagesStore from '../../shared/stores/messages.store';
 export const Main = () => {
   const [chats, setChats] = useState<IChat[]>([]);
   const [messages, setMessages] = useState<IMessage[]>([]);
+  const [chatId, setChatId] = useState<number>(-1);
 
   const getChats = () => {
     chatsStore.getChats().subscribe(chats => {
       setChats(chats);
-    })
+    });
   }
 
   const getMessages = (chat: IChat) => {
-    messagesStore.getMessages(chat.id)
+    messagesStore.getMessages(chat.id);
+    setChatId(chat.id);
   }
-
-  const sendMessage = (recipientId: number, text: string) => {
-    messagesStore.sendMessage(recipientId, text);
-  }
-
-
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    authStore.checkToken().subscribe(
+      (result) => {
+        chatsStore.updateChatList$.next();
+      },
+      () => {
+        authStore.refreshToken().subscribe(
+          () => chatsStore.updateChatList$.next(),
+          () => navigate('/login')
+        );
+      }
+    )
+
     messagesStore.connect();
     chatsStore.updateChatList$.subscribe(() => getChats());
 
@@ -52,13 +60,16 @@ export const Main = () => {
           text: message.text,
           date: message.date,
           my: message.sender.id === authStore.userId,
+          chatId: message.chat.id
         }
       })
       setMessages(messages);
     });
 
     messagesStore.socket.on('send:message:response', (result: any) => {
-
+      if (result.message.chat.id !== chatsStore.currentChat.id) {
+        return;
+      }
 
       // console.log(newMessages);
 
@@ -70,7 +81,8 @@ export const Main = () => {
           id: result.message.id,
           text: result.message.text,
           date: result.message.date,
-          my: result.message.sender.id === authStore.userId
+          my: result.message.sender.id === authStore.userId,
+          chatId: result.message.chat.id
         });
 
         return newMessages;
@@ -78,17 +90,7 @@ export const Main = () => {
       });
     })
 
-    authStore.checkToken().subscribe(
-      (result) => {
-        chatsStore.updateChatList$.next();
-      },
-      () => {
-        authStore.refreshToken().subscribe(
-          () => chatsStore.updateChatList$.next(),
-          () => navigate('/login')
-        );
-      }
-    )
+   
   }, []);
 
   useEffect(() => {
@@ -99,14 +101,17 @@ export const Main = () => {
 
 
   const [inputValue, setInputValue] = useState<string>('');
+
   const onClick = (event: ButtonEvent) => {
     event.preventDefault();
-    // setInputValue('');
     const recipientId = chatsStore.currentChat.firstUser.id === authStore.userId
       ? chatsStore.currentChat.secondUser.id
       : chatsStore.currentChat.firstUser.id;
     messagesStore.sendMessage(recipientId, inputValue);
+    setInputValue('');
   }
+
+  const currentChat = chatsStore.currentChat
 
   return (
     <div className='main'>
@@ -116,8 +121,8 @@ export const Main = () => {
       <div className='main__chat'>
         <Messages messages={messages} />
         <form className='main__chat_send'>
-          <Input type='text' placeholder='Напишите сообщение' onChangeHandler={(event: any) => setInputValue(event.target.value)} value={inputValue}/>
-          <Button placeholder='Отправить' onClickHandler={onClick} />
+          <Input disabled={chatId === -1} type='text' placeholder='Напишите сообщение' onChangeHandler={(event: any) => setInputValue(event.target.value)} value={inputValue}/>
+          <Button disabled={chatId === -1} placeholder='Отправить' onClickHandler={onClick} />
         </form>
       </div>
     </div>

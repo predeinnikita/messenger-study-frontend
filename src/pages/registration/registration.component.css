@@ -23,3 +23,7 @@
 .to-login {
     font-size: smaller;
 }
+
+.button__registration {
+    height: 25px;
+}

@@ -20,7 +20,7 @@ export const App = observer(() => {
       <Header/>
         <Routes>
           <Route path="login" element={<LoginForm />}/>
-          <Route path="main" element={<Main />}/>
+          <Route path="" element={<Main />}/>
           <Route path="registration" element={<RegistrationForm />}/>
         </Routes>
       <Footer />

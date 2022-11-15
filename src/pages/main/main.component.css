@@ -1,5 +1,5 @@
 .main {
-    padding: 50px 193px;
+    padding: 25px 190px;
     gap: 20px;
     height: 527px;
     background-color: var(--bg-color);
@@ -41,4 +41,21 @@
     background-color: #e3e4e5;
     border: 1px solid #cbcbcc;
     border-radius: 0 0 var(--card-radius) var(--card-radius);
+}
+
+@media (max-width: 1050px) {
+  .main {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 450px) {
+  .main {
+    position: relative;
+    padding: 5px 0px;
+  }
+
+  .main__chat-list {
+    display: none;
+  }
 }

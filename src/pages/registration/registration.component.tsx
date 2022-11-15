@@ -50,7 +50,7 @@ export const RegistrationForm = () => {
                value={secondPassword}
                type='password'
         />
-        <Button placeholder='Зарегистрироваться' disabled={!formValid} onClickHandler={registration}/>
+        <Button className='button__registration' placeholder='Зарегистрироваться' disabled={!formValid} onClickHandler={registration}/>
         <span className='to-login'>Есть аккаунт? <a href='/login'>Войдите!</a></span>
       </form>
     </div>

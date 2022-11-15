@@ -31,7 +31,7 @@ export const LoginForm = () => {
       catchError(() => of(false))
     ).subscribe(res => {
       if (res) {
-        navigate('/main');
+        navigate('/');
       } else {
         alert('Неверный логин или пароль')
         loaderStore.setState(false);
@@ -53,7 +53,8 @@ export const LoginForm = () => {
                placeholder='Пароль' 
                value={password} 
                onChangeHandler={(event: any) => setPassword(event.target.value)} />
-        <Button placeholder='Войти' 
+        <Button className='button__login' 
+                placeholder='Войти' 
                 onClickHandler={login}
                 disabled={!formValid} 
         />

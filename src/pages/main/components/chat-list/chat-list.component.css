@@ -7,6 +7,10 @@
     list-style: none;
 }
 
+.chat-list__item_current {
+    background-color: #0000002e;
+}
+
 .search-block {
     padding: 6px;
 }

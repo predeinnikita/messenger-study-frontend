@@ -1,6 +1,6 @@
 import { observable } from "mobx";
-import { map, Observable, Subject } from "rxjs";
-import { ajax, AjaxResponse } from "rxjs/ajax";
+import { catchError, map, Observable, Subject, throwError } from "rxjs";
+import { ajax, AjaxError, AjaxResponse } from "rxjs/ajax";
 import { apiHost } from "../../constants";
 import { IChat } from "../../pages/main/components/chat-list/chat-list.component";
 import authStore from "./auth.store";
@@ -10,6 +10,10 @@ const chatsStore = observable({
     updateChatList$: new Subject<void>(),
     getChats(): Observable<IChat[]> {
         return ajax.get<IChat[]>(`${apiHost}/chats/my`, authStore.headers()).pipe(
+            catchError((err: AjaxError) => {
+                alert(err.response.message);
+                return throwError(err);
+            }),
             map((res: AjaxResponse<IChat[]>) => res.response)
         )
     },
@@ -20,6 +24,10 @@ const chatsStore = observable({
             withCredentials: true,
             headers: authStore.headers(),
         }).pipe(
+            catchError((err: AjaxError) => {
+                alert(err.response.message);
+                return throwError(err);
+            }),
             map((result) => result.response === 200)
         )
     }

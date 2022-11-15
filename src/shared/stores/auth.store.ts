@@ -1,7 +1,7 @@
 import { Http2ServerRequest } from "http2";
 import { observable } from "mobx";
-import { catchError, map, Observable, of, tap } from "rxjs";
-import { ajax } from 'rxjs/ajax'
+import { catchError, map, Observable, of, tap, throwError } from "rxjs";
+import { ajax, AjaxError } from 'rxjs/ajax'
 import { apiHost } from "../../constants";
 import { ILoginResponse, ILoginRequest } from "../interfaces/login.interfaces";
 import { IRegistrationRequest } from "../interfaces/registration.interfaces";
@@ -25,6 +25,10 @@ const authStore = observable({
             headers: this.headers(),
             body: data
         }).pipe(
+            catchError((err: AjaxError) => {
+                alert('Неверный логин или пароль');
+                return throwError(err);
+            }),
             map(res => {
                 localStorage.setItem('userId', res.response.userId.toString())
                 const access_token = res.response.access_token;
@@ -49,7 +53,12 @@ const authStore = observable({
         )
     },
     registration(data: IRegistrationRequest) {
-        return ajax.post(`${apiHost}/auth/registration`, data, this.headers())
+        return ajax.post(`${apiHost}/auth/registration`, data, this.headers()).pipe(
+            catchError((err: AjaxError) => {
+                alert('Ошибка при регистрации');
+                return throwError(err);
+            }),
+        )
 
     },
     checkToken(): Observable<any> {

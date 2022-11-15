@@ -29,12 +29,12 @@ export const Header = observer(() => {
     <header className='header'>
       messenger-study-frontend
       { 
-        getPath().includes('main')
+        getPath().includes('')
         ? <Button className='header__find-button' onClickHandler={() => modalViewModel.open()} placeholder='Найти собеседника' />
         : ''
       }
       { 
-        getPath().includes('main')
+        getPath().includes('')
         ? <Button className='header__button' onClickHandler={logout} placeholder='Выйти' />
         : ''
       }
