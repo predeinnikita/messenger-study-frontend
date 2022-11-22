@@ -2,6 +2,7 @@ import { Socket } from "dgram";
 import { observable } from "mobx";
 import { map, Observable, Subject } from "rxjs";
 import { io } from "socket.io-client";
+import { apiHost } from "../../constants";
 import { IChat } from "../../pages/main/components/chat-list/chat-list.component";
 import { IMessage } from "../../pages/main/components/messages/messages.component";
 import authStore from "./auth.store";
@@ -10,7 +11,7 @@ import chatsStore from "./chats.store";
 const messagesStore = observable({
     socket: io(),
     connect(): void {
-        this.socket = io('http://localhost:3000', {
+        this.socket = io(apiHost, {
             query: {
                 userId: authStore.userId
             },
