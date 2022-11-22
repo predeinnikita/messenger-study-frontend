@@ -1,5 +1,10 @@
+import { IMessage } from '../../../../shared/interfaces/message.interface';
 import chatsStore from '../../../../shared/stores/chats.store';
 import './messages.component.css'
+
+export interface IMessagesProps {
+  messages: IMessage[]
+}
 
 export const Messages = (props: IMessagesProps) => {
 
@@ -25,16 +30,4 @@ export const Messages = (props: IMessagesProps) => {
       }      
     </div>
   )
-}
-
-export interface IMessagesProps {
-  messages: IMessage[]
-}
-
-export interface IMessage {
-  id: number;
-  text: string;
-  date: string;
-  my: boolean;
-  chatId: number;
 }

@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { LoginForm } from './pages/login/login.component';
 import { Main } from './pages/main/main.component';
 import { Footer } from './shared/components/footer/footer.component';
@@ -7,16 +6,12 @@ import { Header } from './shared/components/header/header.component';
 import { observer } from 'mobx-react';
 import loaderStore from './shared/stores/loader.store';
 import { Loader } from './shared/components/loader/loader.component';
-import authStore from './shared/stores/auth.store';
 import './App.css';
 import { RegistrationForm } from './pages/registration/registration.component';
-import { io } from 'socket.io-client';
 
-export const App = observer(() => {
-  const navigate = useNavigate();
-  
+export const App = observer(() => {  
   return (
-    <div className="app s">
+    <div className="app">
       <Header/>
         <Routes>
           <Route path="login" element={<LoginForm />}/>

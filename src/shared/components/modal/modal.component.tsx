@@ -2,6 +2,11 @@ import { ReactNode, useEffect } from 'react';
 import { ModalViewModel } from '../../view-models/modal.view-model';
 import './modal.component.css';
 
+export interface IModalProps {
+    children: ReactNode,
+    modalViewModel: ModalViewModel,
+}
+
 export const Modal = (props: IModalProps) => {    
     const { modalViewModel, children } = props;
 
@@ -20,9 +25,4 @@ export const Modal = (props: IModalProps) => {
             </div>
         </div>
     </>
-}
-
-export interface IModalProps {
-    children: ReactNode,
-    modalViewModel: ModalViewModel,
 }

@@ -1,10 +1,17 @@
-import { observable } from "mobx";
+import { makeAutoObservable, observable } from "mobx";
 
-const loaderStore = observable({
-    loading: true,
-    setState(state: boolean) {
+class LoaderStore {
+    public loading: boolean = false;
+
+    constructor() {
+        makeAutoObservable(this);
+    }
+
+    public setState(state: boolean): void {
         this.loading = state;
-    },
-});
+    }
+}
+
+const loaderStore = observable(new LoaderStore());
 
 export default loaderStore;

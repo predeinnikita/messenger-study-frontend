@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
-import { ChatItem } from '../chat-item/chat-item.componen';
 import { Input } from '../../../../shared/components/input/input.component';
 import './chat-list.component.css'
-import { IUser } from '../../../../shared/interfaces/user.interface';
 import authStore from '../../../../shared/stores/auth.store';
 import messagesStore from '../../../../shared/stores/messages.store';
 import chatsStore from '../../../../shared/stores/chats.store';
+import { IChat } from '../../../../shared/interfaces/chat.interface';
+
+export interface IChatProps {
+  chats: IChat[],
+}
 
 export const ChatList = (props: IChatProps) => {
-
   const { chats } = props;
 
   return (
@@ -34,12 +35,3 @@ export const ChatList = (props: IChatProps) => {
   )
 }
 
-export interface IChatProps {
-  chats: IChat[],
-}
-
-export interface IChat {
-  id: number,
-  firstUser: IUser,
-  secondUser: IUser,
-}

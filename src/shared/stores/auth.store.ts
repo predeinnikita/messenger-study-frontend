@@ -1,28 +1,36 @@
 import { Http2ServerRequest } from "http2";
-import { observable } from "mobx";
+import { makeAutoObservable, observable } from "mobx";
+import { NavigateFunction } from "react-router-dom";
 import { catchError, map, Observable, of, tap, throwError } from "rxjs";
-import { ajax, AjaxError } from 'rxjs/ajax'
+import { ajax, AjaxError, AjaxResponse } from 'rxjs/ajax'
 import { apiHost } from "../../constants";
 import { ILoginResponse, ILoginRequest } from "../interfaces/login.interfaces";
 import { IRegistrationRequest } from "../interfaces/registration.interfaces";
+import chatsStore from "./chats.store";
 
-const authStore = observable({
-    get userId(): number {
+class AuthStore {
+
+    constructor() {
+        makeAutoObservable(this);
+    }
+
+    public get userId(): number {
         return Number(localStorage.getItem('userId'));
-    },
-    headers: () => ({
-        'Content-Type': 'application/json',
-        'Authorization': localStorage.getItem('access_token') || '',
-    }),
-    updateAccessToken(token: string) {
-        localStorage.setItem('access_token', 'Bearer ' + token)
-    },
-    login(data: ILoginRequest): Observable<string> {
+    }
+
+    public get headers() {
+        return {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('access_token') || '',
+        }
+    }
+
+    public login(data: ILoginRequest): Observable<string> {
         return ajax<ILoginResponse>({
             method: 'POST',
             url: `${apiHost}/auth/login`,
             withCredentials: true,
-            headers: this.headers(),
+            headers: this.headers,
             body: data
         }).pipe(
             catchError((err: AjaxError) => {
@@ -37,13 +45,14 @@ const authStore = observable({
                 return access_token;
             })
         )
-    },
-    logout(): Observable<number> {
+    }
+
+    public logout(): Observable<number> {
         return ajax<ILoginResponse>({
             method: 'POST',
             url: `${apiHost}/auth/logout`,
             withCredentials: true,
-            headers: this.headers(),
+            headers: this.headers,
         }).pipe(
             map((res) => {
                 this.updateAccessToken('');
@@ -51,23 +60,40 @@ const authStore = observable({
                 return res.status;
             })
         )
-    },
-    registration(data: IRegistrationRequest) {
-        return ajax.post(`${apiHost}/auth/registration`, data, this.headers()).pipe(
+    }
+
+    public registration(data: IRegistrationRequest) {
+        return ajax.post(`${apiHost}/auth/registration`, data, this.headers).pipe(
             catchError((err: AjaxError) => {
                 alert('Ошибка при регистрации');
                 return throwError(err);
             }),
         )
 
-    },
-    checkToken(): Observable<any> {
-        return ajax.get<any>(`${apiHost}/auth/check-token`, this.headers()).pipe(
-                map(result => localStorage.setItem('userId', result.response.userId)
+    }
+
+    public checkOrRefreshToken(navigate: NavigateFunction) {
+        this.checkToken().subscribe(
+            (result) => {
+                chatsStore.updateChatList$.next();
+            },
+            () => {
+                this.refreshToken().subscribe(
+                    () => chatsStore.updateChatList$.next(),
+                    () => navigate('/login')
+                );
+            }
+        )
+    }
+
+    private checkToken(): Observable<any> {
+        return ajax.get<any>(`${apiHost}/auth/check-token`, this.headers).pipe(
+            map(result => localStorage.setItem('userId', result.response.userId)
             )
         );
-    },
-    refreshToken() {
+    }
+
+    private refreshToken() {
         return ajax<ILoginResponse>({
             method: 'GET',
             url: `${apiHost}/auth/refresh`,
@@ -81,6 +107,12 @@ const authStore = observable({
             })
         );
     }
-});
+
+    private updateAccessToken(token: string) {
+        localStorage.setItem('access_token', 'Bearer ' + token)
+    }
+}
+
+const authStore = observable(new AuthStore());
 
 export default authStore;

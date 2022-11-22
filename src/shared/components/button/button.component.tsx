@@ -1,6 +1,15 @@
 import { MouseEventHandler } from 'react';
 import './button.component.css'
 
+export interface IButtonProps {
+    className?: string,
+    disabled?: boolean,
+    placeholder?: string,
+    onClickHandler?: (e: ButtonEvent) => void
+}
+
+export type ButtonEvent = React.FormEvent<HTMLButtonElement>
+
 export const Button = (props: IButtonProps) => {
     const { className, disabled, placeholder, onClickHandler } = props;
 
@@ -13,11 +22,3 @@ export const Button = (props: IButtonProps) => {
     )
 }
 
-export interface IButtonProps {
-    className?: string,
-    disabled?: boolean,
-    placeholder?: string,
-    onClickHandler?: (e: ButtonEvent) => void
-}
-
-export type ButtonEvent = React.FormEvent<HTMLButtonElement>

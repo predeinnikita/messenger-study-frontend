@@ -1,36 +1,15 @@
-import { ChatItem } from '../chat-item/chat-item.componen';
 import { Input } from '../../../../shared/components/input/input.component';
 import './search-friend.component.css'
-import { Button, ButtonEvent } from '../../../../shared/components/button/button.component';
-import usersStore from '../../../../shared/stores/users.store';
-import { useState } from 'react';
-import { IUser } from '../../../../shared/interfaces/user.interface';
-import loaderStore from '../../../../shared/stores/loader.store';
-import chatsStore from '../../../../shared/stores/chats.store';
-import { PropTypes } from 'mobx-react';
+import { Button } from '../../../../shared/components/button/button.component';
+import UseSearchFriendViewModel from './search-friend.viewmodel';
 
 export const SearchFriend = () => {
-  const [ inputValue, setInputValue ] = useState('');
-  const [ searchingUser, setSearchingUser ] = useState<IUser | null>(null)
-
-  const onClick = (e: ButtonEvent) => {
-    loaderStore.setState(true);
-    e.preventDefault();
-    usersStore.findUser(inputValue).subscribe(
-      searchingUser => {
-        setSearchingUser(searchingUser);
-        loaderStore.setState(false);
-      },
-      error => {
-        setSearchingUser(null);
-        loaderStore.setState(false);
-      }
-    );
-  }
-
-  const createChat = (otherUserId: number) => {
-    chatsStore.createChat(otherUserId).subscribe(() => chatsStore.updateChatList$.next());
-  }
+  const {
+    setInputValue,
+    searchingUser,
+    onClick,
+    createChat
+  } = UseSearchFriendViewModel()
   
   return (
       <div>
@@ -51,8 +30,4 @@ export const SearchFriend = () => {
         </div>
       </div>
   )
-}
-
-export interface ISearchFriendProps {
-  updateChat: () => void;
 }
