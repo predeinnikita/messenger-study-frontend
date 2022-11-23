@@ -3,7 +3,6 @@ import { map, Observable, Subject } from "rxjs";
 import { io } from "socket.io-client";
 import { apiHost } from "../../constants";
 import { IChat } from "../interfaces/chat.interface";
-import { IMessage } from "../interfaces/message.interface";
 import authStore from "./auth.store";
 import chatsStore from "./chats.store";
 

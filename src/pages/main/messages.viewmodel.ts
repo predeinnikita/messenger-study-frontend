@@ -3,6 +3,7 @@ import { NavigateFunction } from "react-router-dom";
 import { IMessage } from "../../shared/interfaces/message.interface";
 import authStore from "../../shared/stores/auth.store";
 import chatsStore from "../../shared/stores/chats.store";
+import loaderStore from "../../shared/stores/loader.store";
 
 export default function UseMessagesViewModel() {
     const [messages, setMessages] = useState<IMessage[]>([]);
@@ -17,6 +18,7 @@ export default function UseMessagesViewModel() {
                 chatId: message.chat.id
             }
         })
+        loaderStore.setState(false);
         setMessages(messages);
     }
 
@@ -24,7 +26,7 @@ export default function UseMessagesViewModel() {
         if (result.message.chat.id !== chatsStore.currentChat.id) {
             return;
         }
-
+        loaderStore.setState(false);
         setMessages((messages: IMessage[]) => {
             const newMessages = messages.slice();
             newMessages.unshift({
@@ -32,9 +34,9 @@ export default function UseMessagesViewModel() {
                 text: result.message.text,
                 date: result.message.date,
                 my: result.message.sender.id === authStore.userId,
-                chatId: result.message.chat.id
+                chatId: result.message.chat.id,
+                chat: result.message.chat,
             });
-
             return newMessages;
         });
     }

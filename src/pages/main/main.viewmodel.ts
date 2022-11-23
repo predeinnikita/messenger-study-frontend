@@ -1,8 +1,9 @@
 
 import { useEffect, useState } from "react"
-import { NavigateFunction, useNavigate } from "react-router-dom";
+import { NavigateFunction } from "react-router-dom";
 import { ButtonEvent } from "../../shared/components/button/button.component";
 import { IChat } from "../../shared/interfaces/chat.interface";
+import { IMessage } from "../../shared/interfaces/message.interface";
 import authStore from "../../shared/stores/auth.store";
 import chatsStore from "../../shared/stores/chats.store";
 import loaderStore from "../../shared/stores/loader.store";
@@ -25,8 +26,11 @@ export default function UseMainViewModel(navigate: NavigateFunction) {
         const recipientId = chatsStore.currentChat.firstUser.id === authStore.userId
           ? chatsStore.currentChat.secondUser.id
           : chatsStore.currentChat.firstUser.id;
-        messagesStore.sendMessage(recipientId, inputValue);
-        setInputValue('');
+        if (inputValue) {
+          messagesStore.sendMessage(recipientId, inputValue);
+          loaderStore.setState(true);
+          setInputValue('');
+        }
       }
 
     const getChats = () => {
@@ -39,6 +43,19 @@ export default function UseMainViewModel(navigate: NavigateFunction) {
     const getMessages = (chat: IChat) => {
         messagesStore.getMessages(chat.id);
         setChatId(chat.id);
+    }
+
+    const updateChats = (chats: IChat[], newMessage: IMessage) => {
+      const chat = chats.find(chat => chat.id === newMessage.chat.id)
+      
+      if (chat) {
+        chat.lastMessage = newMessage;
+        const chatIndex = chats.indexOf(chat);
+        chats.splice(chatIndex, 1);
+        chats.unshift(chat);
+      }
+      
+      return chats;
     }
 
     useEffect(() => {
@@ -54,7 +71,10 @@ export default function UseMainViewModel(navigate: NavigateFunction) {
     
         messagesStore.socket.on('get:message:response', getMessageResponseHandler);
     
-        messagesStore.socket.on('send:message:response', sendMessagesResponseHandler)
+        messagesStore.socket.on('send:message:response', (result: any) => {
+          sendMessagesResponseHandler(result);
+          setChats(chats => updateChats(chats, result.message as IMessage))
+        })
       }, []);
 
       return  {
