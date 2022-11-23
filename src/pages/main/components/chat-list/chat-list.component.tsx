@@ -31,7 +31,7 @@ export const ChatList = (props: IChatProps) => {
               return (<li key={index} className={`chat-list__item${additionalClass}`}>
                 <div className="chat-item" onClick={() => onClickChat(chat)}>
                   <div className="chat-item__name">{otherUser.username}</div>
-                  <div className="chat-item__message">{chat.lastMessage.text}</div>
+                  <div className="chat-item__message">{chat.lastMessage? chat.lastMessage.text: ''}</div>
                 </div>
               </li>)
             })          
