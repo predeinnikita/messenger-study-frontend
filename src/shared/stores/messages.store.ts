@@ -1,13 +1,13 @@
 import { makeAutoObservable, observable } from "mobx";
 import { map, Observable, Subject } from "rxjs";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import { apiHost } from "../../constants";
 import { IChat } from "../interfaces/chat.interface";
 import authStore from "./auth.store";
 import chatsStore from "./chats.store";
 
 class MessagesStore {
-    public socket = io();
+    public socket!: Socket;
     private _openChatSubject$ = new Subject<IChat>();
 
     constructor() {
