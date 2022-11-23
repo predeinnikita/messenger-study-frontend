@@ -1,1 +1,1 @@
-export const apiHost = 'https://messenger-server-rtf.herokuapp.com/'
+export const apiHost = 'https://messenger-server-rtf.herokuapp.com'
